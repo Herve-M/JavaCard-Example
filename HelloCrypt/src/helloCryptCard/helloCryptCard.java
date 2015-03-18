@@ -38,7 +38,7 @@ public class helloCryptCard extends Applet {
     static final byte INS_SET_PUBLIC_EXP = (byte) 0x04;
     static final byte INS_TEST_PUBLIC_KEY = (byte) 0x05;
     static final byte INS_TEST_PRIVATE_KEY = (byte) 0x06;
-    static final byte INS_SET_ISSUED = (byte) 0x07;    
+    static final byte INS_SET_ISSUED = (byte) 0x07;
     //ISSUED
     static final byte INS_SESSION_INIT = (byte) 0x10;
     static final byte INS_MESSAGE = (byte) 0x20;
@@ -49,13 +49,13 @@ public class helloCryptCard extends Applet {
     final static short SW_SESSION_KEY_FAILED = 0x6303;
     final static short SW_SESSION_KEY_NOT_VALID = 0x6304;
     final static short SW_MAGIC_KEY_NOT_VALID = 0x6305;
-    
+
     //DATA
     static final byte MAGIC_VALUE = (byte) 0x5f3759df;
-    static final byte[] MAGIC_STRING = { (byte)0x43, (byte)0x41, (byte)0x46,
-        (byte)0x45, (byte)0x20, (byte)0x49, (byte)0x53, (byte)0x20, (byte)0x54,
-        (byte)0x48, (byte)0x45, (byte)0x20, (byte)0x42, (byte)0x45, (byte)0x53,
-        (byte)0x54 };
+    static final byte[] MAGIC_STRING = {(byte) 0x43, (byte) 0x41, (byte) 0x46,
+        (byte) 0x45, (byte) 0x20, (byte) 0x49, (byte) 0x53, (byte) 0x20, (byte) 0x54,
+        (byte) 0x48, (byte) 0x45, (byte) 0x20, (byte) 0x42, (byte) 0x45, (byte) 0x53,
+        (byte) 0x54};
     private byte state;
     private byte[] sessionKey;
     byte[] tmp;
@@ -68,11 +68,8 @@ public class helloCryptCard extends Applet {
     Cipher cipherRSA;
     Cipher cipherDES;
     Signature signature;
-    
 
     //BEHAVIOR
-
-
     /**
      * Installs this applet.
      *
@@ -181,184 +178,180 @@ public class helloCryptCard extends Applet {
                 ISOException.throwIt(ISO7816.SW_COMMAND_NOT_ALLOWED);
         }
     }
-    
+
     /**
      * Set Modulus of public key
+     *
      * @param apdu
-     * @param lc 
+     * @param lc
      */
-    void insSetPublicModulus(APDU apdu){
+    void insSetPublicModulus(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
         try {
             JCSystem.beginTransaction();
-            publicKey.setModulus(buffer, ISO7816.OFFSET_CDATA, (short)(buffer[ISO7816.OFFSET_LC]& 0x00FF));
+            publicKey.setModulus(buffer, ISO7816.OFFSET_CDATA, (short) (buffer[ISO7816.OFFSET_LC] & 0x00FF));
             JCSystem.commitTransaction();
-        } catch (CryptoException ex){
+        } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short)(0x9100 + ex.getReason()));
-        }
-        catch(TransactionException ex){
-            ISOException.throwIt((short)(0x9200 + ex.getReason()));
+            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+        } catch (TransactionException ex) {
+            ISOException.throwIt((short) (0x9200 + ex.getReason()));
         }
     }
-   /**
-    * Set Modulus of private key
-    * @param apdu
-    * @param lc 
-    */
-    void insSetPrivateModulus(APDU apdu){
+
+    /**
+     * Set Modulus of private key
+     *
+     * @param apdu
+     * @param lc
+     */
+    void insSetPrivateModulus(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        try{
+        try {
             JCSystem.beginTransaction();
-            privateKey.setModulus(buffer, ISO7816.OFFSET_CDATA, (short)(buffer[ISO7816.OFFSET_LC]& 0x00FF));
+            privateKey.setModulus(buffer, ISO7816.OFFSET_CDATA, (short) (buffer[ISO7816.OFFSET_LC] & 0x00FF));
             JCSystem.commitTransaction();
-        }
-        catch(CryptoException ex){
+        } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short)(0x9100 + ex.getReason()));
-        }
-        catch(TransactionException ex){
-            ISOException.throwIt((short)(0x9200 + ex.getReason()));
+            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+        } catch (TransactionException ex) {
+            ISOException.throwIt((short) (0x9200 + ex.getReason()));
         }
     }
-    
+
     /**
      * Set Exponent of private key
+     *
      * @param apdu
-     * @param lc 
+     * @param lc
      */
-    void insSetPrivateExp(APDU apdu){
+    void insSetPrivateExp(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        try{
+        try {
             JCSystem.beginTransaction();
-            privateKey.setExponent(buffer, ISO7816.OFFSET_CDATA, (short)(buffer[ISO7816.OFFSET_LC]& 0x00FF));
+            privateKey.setExponent(buffer, ISO7816.OFFSET_CDATA, (short) (buffer[ISO7816.OFFSET_LC] & 0x00FF));
             JCSystem.commitTransaction();
-        }
-        catch(CryptoException ex){
+        } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short)(0x9100 + ex.getReason()));
-        }
-        catch(TransactionException ex){
-            ISOException.throwIt((short)(0x9200 + ex.getReason()));
+            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+        } catch (TransactionException ex) {
+            ISOException.throwIt((short) (0x9200 + ex.getReason()));
         }
     }
-    
+
     /**
      * Set Exponent of public key
+     *
      * @param apdu
-     * @param lc 
+     * @param lc
      */
-    void insSetPublicExp(APDU apdu){
+    void insSetPublicExp(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        try{
+        try {
             JCSystem.beginTransaction();
-            publicKey.setExponent(buffer, ISO7816.OFFSET_CDATA, (short)(buffer[ISO7816.OFFSET_LC]& 0x00FF));
+            publicKey.setExponent(buffer, ISO7816.OFFSET_CDATA, (short) (buffer[ISO7816.OFFSET_LC] & 0x00FF));
             JCSystem.commitTransaction();
-        }
-        catch(CryptoException ex){
+        } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short)(0x9100 + ex.getReason()));
-        }
-        catch(TransactionException ex){
-            ISOException.throwIt((short)(0x9200 +ex.getReason()));
+            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+        } catch (TransactionException ex) {
+            ISOException.throwIt((short) (0x9200 + ex.getReason()));
         }
     }
-    
+
     /**
      * Test if the Public key is initialized
-     * @param apdu 
+     *
+     * @param apdu
      */
-    void insTestPublicKey(APDU apdu){
-        if(publicKey != null && !publicKey.isInitialized()){
+    void insTestPublicKey(APDU apdu) {
+        if (publicKey != null && !publicKey.isInitialized()) {
             ISOException.throwIt(SW_PULBIC_KEY_FAILED);
         }
     }
-    
+
     /**
      * Test if the Private key is initialized
-     * @param apdu 
+     *
+     * @param apdu
      */
-    void insTestPrivateKey(APDU apdu){
-        if(privateKey != null && !privateKey.isInitialized()){
+    void insTestPrivateKey(APDU apdu) {
+        if (privateKey != null && !privateKey.isInitialized()) {
             ISOException.throwIt(SW_PRIVATE_KEY_FAILED);
         }
     }
-    
+
     /**
-     * Init the session
-     * Generate a random DES Key
-     * Crypt it
-     * Sign it
-     * @param apdu 
+     * Init the session Generate a random DES Key Crypt it Sign it
+     *
+     * @param apdu
      */
-    void insSessionInit(APDU apdu){
-        try{
-            randomDataGenerator.generateData(tmp, (short)0, (short)25);
-            randomDataGenerator.setSeed(tmp, (short)0, (short)25);
-            randomDataGenerator.generateData(sessionKey, (short)0, (short)16);
+    void insSessionInit(APDU apdu) {
+        try {
+            randomDataGenerator.generateData(tmp, (short) 0, (short) 25);
+            randomDataGenerator.setSeed(tmp, (short) 0, (short) 25);
+            randomDataGenerator.generateData(sessionKey, (short) 0, (short) 16);
             JCSystem.beginTransaction();
-            desKey.setKey(sessionKey, (short)0);
+            desKey.setKey(sessionKey, (short) 0);
             JCSystem.commitTransaction();
-            
+
             byte[] buffer = apdu.getBuffer();
             short outCryptBuffSize = 0;
             short outSignBuffSize = 0;
-            
+
             //Crypting
             cipherRSA.init(publicKey, Cipher.MODE_ENCRYPT);
-            outCryptBuffSize = cipherRSA.doFinal(sessionKey, (short)0, (short)16, buffer, ISO7816.OFFSET_CDATA);
-            
+            outCryptBuffSize = cipherRSA.doFinal(sessionKey, (short) 0, (short) 16, buffer, ISO7816.OFFSET_CDATA);
+
             //Signing
             signature.init(privateKey, Signature.MODE_SIGN);
-            outSignBuffSize = signature.sign(buffer, ISO7816.OFFSET_CDATA, outCryptBuffSize, buffer, (short)(ISO7816.OFFSET_CDATA + outCryptBuffSize));
-            
-            short totalSize = (short)(outCryptBuffSize + outSignBuffSize);
+            outSignBuffSize = signature.sign(buffer, ISO7816.OFFSET_CDATA, outCryptBuffSize, buffer, (short) (ISO7816.OFFSET_CDATA + outCryptBuffSize));
+
+            short totalSize = (short) (outCryptBuffSize + outSignBuffSize);
             apdu.setOutgoing();
             apdu.setOutgoingLength(totalSize);
             apdu.sendBytes(ISO7816.OFFSET_CDATA, totalSize);
-            
-        }
-        catch(CryptoException | TransactionException | NullPointerException | ArrayIndexOutOfBoundsException | APDUException ex){
+
+        } catch (CryptoException | TransactionException | NullPointerException | ArrayIndexOutOfBoundsException | APDUException ex) {
             JCSystem.abortTransaction();
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
-        }
-        finally{
-            Util.arrayFillNonAtomic(sessionKey, (short)0, (short)16, (byte)0);
-            Util.arrayFillNonAtomic(tmp, (short)0, (short)25, (byte)0);
+        } finally {
+            Util.arrayFillNonAtomic(sessionKey, (short) 0, (short) 16, (byte) 0);
+            Util.arrayFillNonAtomic(tmp, (short) 0, (short) 25, (byte) 0);
         }
     }
-    
+
     /**
-     * Get message 
-     * Verify is MAGIC VALUE is set
-     * Add a custom string :)
-     * @param apdu 
+     * Get message Verify is MAGIC VALUE is set Add a custom string :)
+     *
+     * @param apdu
      */
-    void insMessage(APDU apdu){
+    void insMessage(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
         short outCryptBuffSize = 0;
-        short numBytes = (short)(buffer[ISO7816.OFFSET_LC]& 0x00FF);
-        
+        short numBytes = (short) (buffer[ISO7816.OFFSET_LC] & 0x00FF);
+
         cipherDES.init(desKey, Cipher.MODE_DECRYPT);
-        outCryptBuffSize = cipherDES.doFinal(buffer, ISO7816.OFFSET_CDATA,numBytes, tmp, (short)0);
-        
-        if(tmp[0] != MAGIC_VALUE)
+        outCryptBuffSize = cipherDES.doFinal(buffer, ISO7816.OFFSET_CDATA, numBytes, tmp, (short) 0);
+
+        if (tmp[0] != MAGIC_VALUE) {
             ISOException.throwIt(SW_MAGIC_KEY_NOT_VALID);
-        
-        outCryptBuffSize = Util.arrayCopyNonAtomic(MAGIC_STRING, (short)0, tmp, outCryptBuffSize, (short)MAGIC_STRING.length);
-        
+        }
+
+        outCryptBuffSize = Util.arrayCopyNonAtomic(MAGIC_STRING, (short) 0, tmp, outCryptBuffSize, (short) MAGIC_STRING.length);
+
         cipherDES.init(desKey, Cipher.MODE_ENCRYPT);
-        outCryptBuffSize = cipherDES.doFinal(tmp, (short)0, outCryptBuffSize, buffer, ISO7816.OFFSET_CDATA);
-        
+        outCryptBuffSize = cipherDES.doFinal(tmp, (short) 0, outCryptBuffSize, buffer, ISO7816.OFFSET_CDATA);
+
         apdu.setOutgoing();
         apdu.setOutgoingLength(outCryptBuffSize);
-        apdu.sendBytes(ISO7816.OFFSET_CDATA, outCryptBuffSize);        
-    } 
-    
+        apdu.sendBytes(ISO7816.OFFSET_CDATA, outCryptBuffSize);
+    }
+
     /**
      * Set tha APP as Issued
      */
-    void insSetIssued(){
+    void insSetIssued() {
         state = STATE_ISSUED;
     }
 
