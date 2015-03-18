@@ -5,11 +5,9 @@ Main goal is to give some example of security implementation.
 
 ##Folder Organization :
 
-.BasicCrypt <br>
-:: Basic JavaCard application. Has two function : crypt and uncrypt
+.HelloCrypt <br>
+:: Basic JavaCard application with basic crypt protocol. 
 
-.BasicTerminal <br>
-:: BasicCrypt Terminal App. 
 
 ##File Description :
 

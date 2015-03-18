@@ -5,6 +5,6 @@
 
 To work with projects you will need :
 
-NetBeans
-JCardSim
-Java 1.7 or OpenJDK
+>NetBeans <br>
+>JCardSim <br>
+>Java 1.7 or OpenJDK <br>
