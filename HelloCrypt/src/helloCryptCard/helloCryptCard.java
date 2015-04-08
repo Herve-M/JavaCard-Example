@@ -193,9 +193,9 @@ public class helloCryptCard extends Applet {
             JCSystem.commitTransaction();
         } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9100 + ex.getReason()));
         } catch (TransactionException ex) {
-            ISOException.throwIt((short) (0x9200 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9200 + ex.getReason()));
         }
     }
 
@@ -213,9 +213,9 @@ public class helloCryptCard extends Applet {
             JCSystem.commitTransaction();
         } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9100 + ex.getReason()));
         } catch (TransactionException ex) {
-            ISOException.throwIt((short) (0x9200 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9200 + ex.getReason()));
         }
     }
 
@@ -233,9 +233,9 @@ public class helloCryptCard extends Applet {
             JCSystem.commitTransaction();
         } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9100 + ex.getReason()));
         } catch (TransactionException ex) {
-            ISOException.throwIt((short) (0x9200 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9200 + ex.getReason()));
         }
     }
 
@@ -253,9 +253,9 @@ public class helloCryptCard extends Applet {
             JCSystem.commitTransaction();
         } catch (CryptoException ex) {
             JCSystem.abortTransaction();
-            ISOException.throwIt((short) (0x9100 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9100 + ex.getReason()));
         } catch (TransactionException ex) {
-            ISOException.throwIt((short) (0x9200 + ex.getReason()));
+            ISOException.throwIt((short) ((short) 0x9200 + ex.getReason()));
         }
     }
 
