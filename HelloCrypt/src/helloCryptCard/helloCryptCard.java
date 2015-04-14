@@ -312,18 +312,21 @@ public class helloCryptCard extends Applet {
             apdu.setOutgoingLength(totalSize);
             apdu.sendBytes(ISO7816.OFFSET_CDATA, totalSize);
 
-        } catch (CryptoException ex) {            
+        } catch (CryptoException ex) {
+            JCSystem.abortTransaction();
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
         } catch (TransactionException ex){
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
         } catch (NullPointerException ex){
+            JCSystem.abortTransaction();
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
         } catch (ArrayIndexOutOfBoundsException ex){
+            JCSystem.abortTransaction();
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
         } catch (APDUException ex){
+            JCSystem.abortTransaction();
             ISOException.throwIt(SW_SESSION_KEY_FAILED);
         } finally {
-            JCSystem.abortTransaction();
             Util.arrayFillNonAtomic(sessionKey, (short) 0, (short) 16, (byte) 0);
             Util.arrayFillNonAtomic(tmp, (short) 0, (short) 25, (byte) 0);
         }
